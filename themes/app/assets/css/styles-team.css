@@ -1,0 +1,82 @@
+#div-area {
+    width: 100%;
+    height: auto; /* Altura ajustada ao conteúdo */
+    display: flex;
+    justify-content: center; /* Centraliza o time na tela */
+    align-items: center;
+    padding: 40px; /* Espaçamento ao redor */
+}
+
+.team-focus {
+    width: 100%;
+    max-width: 900px; /* Largura máxima do time */
+    background-color: #1a141a; /* Fundo do time */
+    margin: 30px auto; /* Espaço acima e abaixo */
+    border-radius: 15px; /* Bordas arredondadas */
+    padding: 30px; /* Espaçamento interno */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra para foco */
+}
+
+.div-team-info {
+    text-align: center; /* Centraliza o texto */
+    margin-bottom: 20px; /* Espaço entre título e membros */
+    padding-bottom: 10px; /* Espaçamento abaixo da linha */
+    border-bottom: 3px solid #e59312; /* Linha de separação */
+}
+
+.div-team-info h1 {
+    margin: 0;
+    font-size: 28px; /* Tamanho do título */
+    color: #e59312; /* Cor do título */
+    letter-spacing: 1px; /* Espaçamento entre letras */
+    text-transform: uppercase; /* Texto em maiúsculas */
+}
+
+.div-team-info p {
+    margin: 10px 0;
+    color: #f4b315; /* Cor da descrição */
+    font-size: 20px; /* Tamanho da descrição */
+    line-height: 1.5; /* Espaçamento entre linhas */
+}
+
+.div-team-members {
+    display: flex;
+    flex-wrap: wrap; /* Quebra de linha se necessário */
+    justify-content: space-around; /* Espaçamento uniforme */
+    gap: 15px; /* Espaço entre membros */
+}
+
+.div-team-members h1 {
+    width: 100%;
+    font-size: 24px;
+    color: #e59312; /* Cor do título dos membros */
+    text-align: center; /* Centraliza o título */
+    margin-bottom: 20px; /* Espaço abaixo do título */
+}
+
+.team-member {
+    width: calc(48% - 10px); /* Quase metade da largura disponível */
+    background-color: #8e5915; /* Cor de fundo do membro */
+    padding: 15px; /* Espaçamento interno */
+    border-radius: 10px; /* Bordas arredondadas */
+    display: flex;
+    align-items: center; /* Centraliza verticalmente */
+    justify-content: flex-start; /* Alinha ao início */
+    gap: 10px; /* Espaço entre imagem e texto */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Sombra para destaque */
+}
+
+.team-member-info h1 {
+    color: #1a141a; /* Cor do nome do membro */
+    font-size: 18px; /* Tamanho da fonte do membro */
+    margin: 0;
+    text-align: center; /* Centraliza o nome do membro */
+}
+
+.team-member img {
+    width: 50px; /* Largura da imagem */
+    height: 50px; /* Altura da imagem */
+    border-radius: 50%; /* Formato circular */
+    border: 2px solid #1a141a; /* Borda */
+    object-fit: cover; /* Ajuste de imagem */
+}

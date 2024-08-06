@@ -1,31 +1,53 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Área Privada</title>
-    <link rel="stylesheet" href="<?= url("themes/app/assets/css/styles.css"); ?>"> <!-- Atualize com o caminho correto do seu arquivo CSS -->
+    <link rel="stylesheet" href="<?= url("themes/app/assets/css/styles-theme.css"); ?>">
+    <title>BeesMap</title>
 </head>
-<body class="private-area">
-<nav id="private-navbar">
-    <div id="user-greeting">
-        <div id="user-photo"></div>
-        <span>Olá, Fulano!</span>
-    </div>
-    <a href="<?= url("/app/perfil"); ?>">Perfil</a>
-    <a href="#">Meus Pedidos</a>
-    <a href="#">Configurações</a>
-    <a href="#">Mensagens</a>
-    <a href="#">Suporte</a>
-    <a href="#">Sair</a>
-</nav>
-<div class="content">
+
+<body>
+
+    <nav id="navBar">
+        <label id="lblLogo">
+            <a href="<?= url("app") ?>">
+                <h1>BeesMap</h1>
+                <img src="<?= url("themes/_assets/imgs/bee-white.png") ?>" alt="bee">
+            </a>
+        </label>
+        <h1>|</h1>
+        <label>
+            <a href="<?= url("app") ?>">
+                <h1>Inicio</h1>
+            </a>
+        </label>
+        <h1>|</h1>
+        <label>
+            <a href="<?= url("app/perfil") ?>">
+                <h1>Perfil</h1>
+            </a>
+        </label>
+        <h1>|</h1>
+        <label>
+            <a href="<?= url("app/equipe") ?>">
+                <h1>Equipe</h1>
+            </a>
+        </label>
+        <h1>|</h1>
+        <label>
+            <a href="<?= url("") ?>">
+                <h1>Deslogar</h1>
+            </a>
+        </label>
+    </nav>
     <?php
     echo $this->section("content");
     ?>
-</div>
-<footer class="private-footer">
-    © 2023 Nome da Empresa. Todos os direitos reservados.
-</footer>
+    <footer>
+        <h1>2024 - João Pedro Anjolim Soares</h1>
+    </footer>
 </body>
+
 </html>

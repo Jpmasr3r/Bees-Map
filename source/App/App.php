@@ -24,4 +24,9 @@ class App
         echo $this->view->render("profile",[]);
     }
 
+    public function team ()
+    {
+        echo $this->view->render("team",[]);
+    }
+
 }

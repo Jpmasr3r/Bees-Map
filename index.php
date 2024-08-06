@@ -9,6 +9,7 @@ ob_start();
 $route = new Router(url(), ":");
 
 $route->namespace("Source\App");
+
 // Rotas amigáveis da área pública
 $route->get("/", "Web:home");
 $route->get("/login","Web:loginRegister");
@@ -17,18 +18,21 @@ $route->get("/sobre", "Web:about");
 $route->get("/contato", "Web:contact");
 $route->get("/faqs","Web:faqs");
 
-// Rotas amigáveis da área restrita
+// Rotas amigáveis da área app
 $route->group("/app");
 
 $route->get("/", "App:home");
 $route->get("/perfil", "App:profile");
-//$route->get("/carrinho", "App:cart");
+$route->get("/equipe", "App:team");
 
+// Rotas amigáveis da área admin
 $route->group(null);
 
-$route->group("/admin");
+$route->group("/adm");
 
 $route->get("/", "Admin:home");
+$route->get("/registros", "Admin:registers");
+$route->get("/usuarios", "Admin:users");
 
 $route->group(null);
 

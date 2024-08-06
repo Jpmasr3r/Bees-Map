@@ -2,8 +2,8 @@
 echo $this->layout("_theme");
 ?>
 
-<link rel="stylesheet" href="./themes/web/assets/css/style-faq.css">
-<script src="./themes/web/assets/js/script-faqs.js" async></script>
+<link rel="stylesheet" href="<?= url("themes/web/assets/css/style-faq.css") ?>">
+<script src="<?= url("themes/web/assets/js/script-faqs.js") ?>" async></script>
 
 <h1 id="title">
     <b>

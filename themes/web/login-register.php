@@ -2,8 +2,8 @@
 echo $this->layout("_theme");
 ?>
 
-<link rel="stylesheet" href="./themes/web/assets/css/style-login.css">
-<script src="./themes/web/assets/js/script-login.js" async></script>
+<link rel="stylesheet" href="<?= url("themes/web/assets/css/style-login-register.css") ?>">
+<script src="<?= url("themes/web/assets/js/script-login-register.js") ?>" async></script>
 
 <div id="div-login-register">
     <div id="div-login">
@@ -20,7 +20,7 @@ echo $this->layout("_theme");
             <label>Fazer login</label>
         </a>
     </div>
-    <img src="./themes/web/assets/imgs/bee-white.png" alt="bee">
+    <img src="<?= url("themes/_assets/imgs/bee-white.png") ?>" alt="bee">
     <div id="div-register" >
         <h1>Registro</h1>
         <label>

@@ -1,0 +1,87 @@
+#div-area {
+    width: 100%;
+    height: auto; /* Ajusta automaticamente a altura com base no conteúdo */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px; /* Adiciona espaçamento ao redor dos times */
+}
+
+.team-container {
+    width: 100%;
+    max-width: 800px; /* Limita a largura máxima de cada time */
+    background-color: #1a141a; /* Fundo para cada bloco de time */
+    margin-bottom: 30px; /* Espaço entre times */
+    border-radius: 15px;
+    padding: 20px; /* Espaçamento interno */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para destaque */
+}
+
+.div-team-info {
+    width: 100%;
+    margin-bottom: 20px; /* Espaço entre informações do time e membros */
+    text-align: center; /* Centraliza o texto */
+    border-bottom: 2px solid #444; /* Linha de separação */
+    padding-bottom: 10px; /* Espaçamento abaixo da linha */
+}
+
+.div-team-info h1 {
+    margin: 0 0 10px 0;
+    font-size: 26px;
+    color: #e59312;
+}
+
+.div-team-info p {
+    margin: 0;
+    color: #f4b315;
+    font-size: 18px;
+}
+
+.div-team-members {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os membros quebrem linha se necessário */
+    justify-content: space-around; /* Espaçamento uniforme entre membros */
+    gap: 10px; /* Espaço entre os membros */
+}
+
+.div-team-members h1 {
+    width: 100%;
+    font-size: 22px;
+    color: #e59312;
+    text-align: center; /* Centraliza o título dos membros */
+    margin-bottom: 10px; /* Espaço abaixo do título dos membros */
+}
+
+.team-member {
+    width: calc(50% - 10px); /* Cada membro ocupa metade da largura disponível menos o gap */
+    background-color: #8e5915;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center; /* Centraliza verticalmente os itens internos */
+    justify-content: flex-start;
+    flex-direction: row;
+    gap: 10px; /* Espaço entre imagem e texto */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave para destaque */
+    transition: transform 0.2s ease-in-out; /* Transição para animação */
+}
+
+.team-member:hover {
+    transform: translateY(-3px); /* Elevação ao passar o mouse */
+}
+
+.team-member-info h1 {
+    color: #1a141a;
+    font-size: 16px;
+    text-align: center;
+    margin: 0;
+}
+
+.team-member img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #000;
+    object-fit: cover; /* Garante que a imagem seja cortada adequadamente */
+}

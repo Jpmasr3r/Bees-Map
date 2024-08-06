@@ -2,7 +2,7 @@
 echo $this->layout("_theme");
 ?>
 
-<link rel="stylesheet" href="./themes/web/assets/css/style-about.css">
+<link rel="stylesheet" href="<?= url("themes/web/assets/css/style-about.css") ?>">
 
 <h1 id="title">Sobre</h1>
 

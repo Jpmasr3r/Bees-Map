@@ -15,8 +15,17 @@ class Admin
 
     public function home ()
     {
-        //echo "<h1>Eu sou a Home...</h1>";
         echo $this->view->render("home",[]);
+    }
+
+    public function registers ()
+    {
+        echo $this->view->render("registers",[]);
+    }
+
+    public function users ()
+    {
+        echo $this->view->render("users",[]);
     }
 
 }
