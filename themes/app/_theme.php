@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="<?= url("themes/_assets/imgs/bee-white.png") ?>"/>
     <link rel="stylesheet" href="<?= url("themes/app/assets/css/styles-theme.css"); ?>">
     <title>BeesMap</title>
 </head>

@@ -11,7 +11,6 @@ $route = new Router(url(),":");
 $route->namespace("Source\App\Api");
 
 /* USERS */
-
 $route->group("/users");
 
 $route->get("/", "Users:listUsers");
@@ -21,9 +20,16 @@ $route->post("/update","Users:updateUser");
 $route->post("/set-password","Users:setPassword");
 
 $route->group("null");
+/* TEAMS */
+$route->group("/teams");
 
+$route->get("/","Teams:listTeams");
+$route->post("/","Teams:createTeam");
+$route->post("/update","Teams:updateTeam");
+$route->post("/join","Teams:joinTeam");
+
+$route->group("null");
 /* FAQS */
-
 $route->group("/faqs");
 
 $route->get("/","Faqs:listFaqs");

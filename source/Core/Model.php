@@ -24,14 +24,15 @@ abstract class Model
         return $conn->query($query)->fetchAll();
     }
 
-    public function selectById (int $id): ?array
-    {
-        $conn = Connect::getInstance();
-        $query = "SELECT * 
-                  FROM {$this->entity}
-                  WHERE id = {$id}";
-        return $conn->query($query)->fetchAll();
-    }
+    public function selectById(int $id): ?array
+{
+    $conn = Connect::getInstance();
+    $query = "SELECT * FROM {$this->entity} WHERE id = :id";
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
     public function insert(): ?int
     {
         $values = get_object_vars($this);// pegar os valores dos atributos e inserir em um arra

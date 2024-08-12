@@ -11,19 +11,25 @@ class User extends Model {
     private $name;
     private $email;
     private $password;
+    private $teamId;
+    private $teamLeader;
     private $message;
 
     public function __construct(
         int $id = null,
         string $name = null,
         string $email = null,
-        string $password = null
+        string $password = null,
+        int $teamId = null,
+        int $teamLeader = 0,
     )
     {
         $this->id = $id;
         $this->name = $name;
         $this->email = $email;
         $this->password = $password;
+        $this->teamId = $teamId;
+        $this->teamLeader = $teamLeader;
         $this->entity = "users";
     }
 
@@ -35,6 +41,26 @@ class User extends Model {
     public function setId(?int $id): void
     {
         $this->id = $id;
+    }
+
+    public function getTeamLeader(): ?bool
+    {
+        return $this->teamLeader;
+    }
+
+    public function setTeamLeader(?bool $teamLeader): void
+    {
+        $this->teamLeader = $teamLeader;
+    }
+
+    public function getTeamId(): ?int
+    {
+        return $this->teamId;
+    }
+
+    public function setTeamId(?int $teamId): void
+    {
+        $this->teamId = $teamId;
     }
 
     public function getName(): ?string
@@ -92,10 +118,15 @@ class User extends Model {
             return false;
         }
 
+        if(7 >= strlen($this->password)) {
+            $this->message = "A senha é muito curta, minimo de 8 caracteres";
+            return false;
+        }
+        
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
 
-        $query = "INSERT INTO users (name, email, password) 
-                  VALUES (:name, :email, :password)";
+        $query = "INSERT INTO users (name, email, password,team_leader,team_id) 
+                  VALUES (:name, :email, :password,false,null)";
 
         $stmt = $conn->prepare($query);
         $stmt->bindParam(":name", $this->name);
@@ -133,6 +164,8 @@ class User extends Model {
         $this->setId($result->id);
         $this->setName($result->name);
         $this->setEmail($result->email);
+        $this->setTeamLeader($result->team_leader);  
+        $this->setTeamId($result->team_id);
 
         $this->message = "Usuário logado com sucesso!";
 
@@ -161,12 +194,14 @@ class User extends Model {
         }
 
         $query = "UPDATE users 
-                  SET name = :name, email = :email 
+                  SET name = :name, email = :email, team_id = :team_id, team_leader = :team_leader
                   WHERE id = :id";
 
         $stmt = $conn->prepare($query);
         $stmt->bindParam(":name", $this->name);
         $stmt->bindParam(":email", $this->email);
+        $stmt->bindParam(":team_id", $this->teamId);
+        $stmt->bindParam(":team_leader", $this->teamLeader);
         $stmt->bindParam(":id", $this->id);
 
         try {
@@ -193,9 +228,14 @@ class User extends Model {
             $this->message = "Senha incorreta!";
             return false;
         }
+        
+        if(7 >= strlen($newPassword)) {
+            $this->message = "Nova senha muito curta minimo de 8 caracteres";
+            return false;
+        }
 
         if ($newPassword != $confirmNewPassword) {
-            $this->message = "As senhas não conferem!";
+            $this->message = "As novas senhas não conferem!";
             return false;
         }
 

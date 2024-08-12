@@ -5,6 +5,7 @@ namespace Source\App\Api;
 use Source\Core\TokenJWT;
 use Source\Models\User;
 
+session_start();
 class Users extends Api
 {
     public function __construct()
@@ -12,21 +13,30 @@ class Users extends Api
         parent::__construct();
     }
 
-    public function listUsers ()
+    public function listUsers()
     {
         $users = new User();
         $this->back($users->selectAll());
     }
 
-    public function createUser (array $data)
+    public function createUser(array $data)
     {
-        if(in_array("", $data)) {
+        if (in_array("", $data)) {
             $this->back([
                 "type" => "error",
                 "message" => "Preencha todos os campos"
             ]);
             return;
         }
+
+        if ($data["password"] != $data["confirmPassword"]) {
+            $this->back([
+                "type" => "error",
+                "message" => "A senhas não correspondem"
+            ]);
+            return;
+        }
+
 
         $user = new User(
             null,
@@ -37,7 +47,7 @@ class Users extends Api
 
         $insertUser = $user->insert();
 
-        if(!$insertUser){
+        if (!$insertUser) {
             $this->back([
                 "type" => "error",
                 "message" => $user->getMessage()
@@ -49,40 +59,49 @@ class Users extends Api
             "type" => "success",
             "message" => "Usuário cadastrodo com sucesso!"
         ]);
-
     }
 
-    public function loginUser (array $data) {
+    public function loginUser(array $data)
+    {
         $user = new User();
 
-        if(!$user->login($data["email"],$data["password"])){
+        if (!$user->login($data["email"], $data["password"])) {
             $this->back([
                 "type" => "error",
                 "message" => $user->getMessage()
             ]);
             return;
         }
+
         $token = new TokenJWT();
+        $tokenCreate = $token->create([
+            "id" => $user->getId(),
+            "name" => $user->getName(),
+            "email" => $user->getEmail()
+        ]);
+        $this->userAuth = $token->verify($tokenCreate);
+
+        $_SESSION["user"] = [
+            "id" => $user->getId(),
+            "name" => $user->getName(),
+            "email" => $user->getEmail(),
+            "teamId" => $user->getTeamId(),
+            "token" => $tokenCreate,
+        ];
+
         $this->back([
             "type" => "success",
             "message" => $user->getMessage(),
-            "user" => [
-                "id" => $user->getId(),
-                "name" => $user->getName(),
-                "email" => $user->getEmail(),
-                "token" => $token->create([
-                    "id" => $user->getId(),
-                    "name" => $user->getName(),
-                    "email" => $user->getEmail()
-                ])
-            ]
+            "user" => $_SESSION["user"],
+            "verify" => $this->userAuth
         ]);
-
     }
 
     public function updateUser(array $data)
     {
-        if(!$this->userAuth){
+        $userSession = $_SESSION["user"];
+        $token = new TokenJWT();
+        if (!$token->verify($userSession["token"])) {
             $this->back([
                 "type" => "error",
                 "message" => "Você não pode estar aqui.."
@@ -90,13 +109,22 @@ class Users extends Api
             return;
         }
 
+        foreach ($data as $key => $value) {
+            if ($value == null) {
+                $data[$key] = $userSession[$key];
+            }
+        }
+
         $user = new User(
-            $this->userAuth->id,
+            $userSession["id"],
             $data["name"],
-            $data["email"]
+            $data["email"],
+            null,
+            $data["teamId"],
+            $data["teamLeader"],
         );
 
-        if(!$user->update()){
+        if (!$user->update()) {
             $this->back([
                 "type" => "error",
                 "message" => $user->getMessage()
@@ -117,7 +145,9 @@ class Users extends Api
 
     public function setPassword(array $data)
     {
-        if(!$this->userAuth){
+        $userSession = $_SESSION["user"];
+        $token = new TokenJWT();
+        if (!$token->verify($userSession["token"])) {
             $this->back([
                 "type" => "error",
                 "message" => "Você não pode estar aqui.."
@@ -125,9 +155,11 @@ class Users extends Api
             return;
         }
 
-        $user = new User($this->userAuth->id);
+        $user = new User(
+            $userSession["id"]
+        );
 
-        if(!$user->updatePassword($data["password"],$data["newPassword"],$data["confirmNewPassword"])){
+        if (!$user->updatePassword($data["password"], $data["newPassword"], $data["confirmNewPassword"])) {
             $this->back([
                 "type" => "error",
                 "message" => $user->getMessage()

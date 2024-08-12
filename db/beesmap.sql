@@ -1,3 +1,5 @@
+drop database beesmapDB;
+create database beesmapDB;
 use beesmapDB;
 
 CREATE TABLE teams (
@@ -30,6 +32,7 @@ CREATE TABLE users (
     name VARCHAR(255),
     email VARCHAR(255),
     password VARCHAR(255),
+    team_leader BOOLEAN,
     team_id INT ,
     FOREIGN KEY (team_id) REFERENCES teams (id)
 );
