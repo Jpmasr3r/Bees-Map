@@ -11,7 +11,6 @@ abstract class Model
     protected $entity;
 
     private $massage;
-
     public function getMessage(): ?string
     {
         return $this->massage;
@@ -32,6 +31,16 @@ abstract class Model
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+public function selectBy(string $key, string $value): ?array
+{
+    $conn = Connect::getInstance();
+    $query = "SELECT * FROM {$this->entity} WHERE {$key} = :value";
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(':value', $value, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
     public function insert(): ?int
     {
@@ -59,5 +68,6 @@ abstract class Model
         }
 
     }
+
 
 }

@@ -13,25 +13,45 @@ $route->namespace("Source\App\Api");
 /* USERS */
 $route->group("/users");
 
+// get
 $route->get("/", "Users:listUsers");
+
+//post
 $route->post("/","Users:createUser");
 $route->post("/login","Users:loginUser");
-$route->post("/update","Users:updateUser");
-$route->post("/set-password","Users:setPassword");
+$route->post("/loginOut","Users:loginOut");
+
+//put
+$route->put("/update","Users:updateUser");
+$route->put("/set-password","Users:setPassword");
+
+//delete
+$route->delete("/delete","Users:deleteUser");
 
 $route->group("null");
+
 /* TEAMS */
 $route->group("/teams");
 
+//get
 $route->get("/","Teams:listTeams");
+
+//post
 $route->post("/","Teams:createTeam");
-$route->post("/update","Teams:updateTeam");
 $route->post("/join","Teams:joinTeam");
+$route->post("/exit","Teams:exitTeam");
+
+//put
+$route->put("/update","Teams:updateTeam");
+
+//delete
+$route->delete("/delete","Teams:deleteTeam");
 
 $route->group("null");
 /* FAQS */
 $route->group("/faqs");
 
+//get
 $route->get("/","Faqs:listFaqs");
 
 $route->group("null");

@@ -120,4 +120,19 @@ class Team extends Model
             return false;
         }
     }
+
+    public function delete(): ?bool {
+        $conn = Connect::getInstance();
+        $query = "delete from teams where id = {$this->id}";
+        $stmt = $conn->prepare($query);
+        try {
+            $stmt->execute();
+            $this->message = "Equipe deletada com sucesso";
+            return true;
+        } catch (PDOException $exception) {
+            $this->message = "Erro ao deletar: {$exception->getMessage()}";
+            return false;
+        }
+    }
+
 }

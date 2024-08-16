@@ -260,5 +260,19 @@ class User extends Model {
 
     }
 
+    public function delete(): ?bool {
+        $conn = Connect::getInstance();
+        $query = "delete from users where id = {$this->id}";
+        $stmt = $conn->prepare($query);
+        try {
+            $stmt->execute();
+            $this->message = "Usuario deletado com sucesso";
+            return true;
+        } catch (PDOException $exception) {
+            $this->message = "Erro ao deletar: {$exception->getMessage()}";
+            return false;
+        }
+    }
+
 
 }
