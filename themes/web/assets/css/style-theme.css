@@ -125,3 +125,49 @@ a {
 
 }
 
+.divNotification {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+
+    position: fixed;
+    top: 99%;
+    left: 99%;
+
+    min-width: 25vw;
+    width: auto;
+    height: 15%;
+    transform: translate(-100%,-100%);
+    
+    background: #000;
+    animation: animationNotificationLoading 2s forwards ;
+    transition: left 500ms linear;
+
+    border: solid 5px #e59312;
+
+    border-radius: 5px;
+
+    color: #fff;
+
+    h1{
+        width: 90%;
+        height: 50%;
+        font-size: 125%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+}
+
+@keyframes animationNotificationLoading {
+    0% {
+        background: #000;
+        border-color: #e59312;
+    }
+
+    100% {
+        background: #e59312;
+        border-color: #000;
+    }
+}

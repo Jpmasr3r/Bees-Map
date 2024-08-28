@@ -1,4 +1,4 @@
-import User from "./class/User.js";
+import User from "../../../_assets/js/User.js";
 
 const inpRegisterName = document.querySelector("#inp-register-name");
 const inpRegisterEmail = document.querySelector("#inp-register-email");
@@ -12,14 +12,14 @@ btnCreate.addEventListener("click",async () => {
         inpRegisterPassword.value,
         inpRegisterConfirmPassword.value,
         inpRegisterName.value,
-    )
+    );
 
-    const data = await fetch("http://localhost/beesmap/api/users/",{
-        method: "POST",
-        body: user.getFormDataRegister()
-    }).then(res => res.json());
-    console.log(data);
-    
+    let userInsert = await user.insert();    
+    if(userInsert.type == "success") {
+        setTimeout(() => {
+            location.href = "http://localhost/beesmap/login";
+        },1500);
+    }
 })
 
 const inpLoginEmail = document.querySelector("#inp-login-email");
@@ -30,12 +30,14 @@ btnLogin.addEventListener("click",async () => {
     const user = new User(
         inpLoginEmail.value,
         inpLoginPassword.value,
-    )
-
-    const data = await fetch("http://localhost/beesmap/api/users/login/",{
-        method: "POST",
-        body: user.getFormDataLogin()
-    }).then(res => res.json());
-    console.log(data);
+    );
     
+    let userLogin = await user.login();
+    if(userLogin.type == "success") {
+        localStorage.setItem("token", userLogin.token);
+
+        setTimeout(() => {
+            location.href = "http://localhost/beesmap/app";
+        },1500);
+    }
 })

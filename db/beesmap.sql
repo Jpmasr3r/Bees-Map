@@ -62,7 +62,6 @@ create table sales(
 create table vehicles(
 	id int primary key auto_increment,
     model varchar(255),
-    gas double,
     availability boolean,
     team_id int,
     foreign key (team_id) references teams(id)

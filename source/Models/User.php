@@ -6,7 +6,8 @@ use PDOException;
 use Source\Core\Connect;
 use Source\Core\Model;
 
-class User extends Model {
+class User extends Model
+{
     private $id;
     private $name;
     private $email;
@@ -22,8 +23,7 @@ class User extends Model {
         string $password = null,
         int $teamId = null,
         int $teamLeader = 0,
-    )
-    {
+    ) {
         $this->id = $id;
         $this->name = $name;
         $this->email = $email;
@@ -103,7 +103,7 @@ class User extends Model {
 
         $conn = Connect::getInstance();
 
-        if(!filter_var($this->email,FILTER_VALIDATE_EMAIL)){
+        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
             $this->message = "E-mail Inválido!";
             return false;
         }
@@ -113,16 +113,16 @@ class User extends Model {
         $stmt->bindParam(":email", $this->email);
         $stmt->execute();
 
-        if($stmt->rowCount() == 1) {
+        if ($stmt->rowCount() == 1) {
             $this->message = "E-mail já cadastrado!";
             return false;
         }
 
-        if(7 >= strlen($this->password)) {
+        if (7 >= strlen($this->password)) {
             $this->message = "A senha é muito curta, minimo de 8 caracteres";
             return false;
         }
-        
+
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
 
         $query = "INSERT INTO users (name, email, password,team_leader,team_id) 
@@ -164,20 +164,19 @@ class User extends Model {
         $this->setId($result->id);
         $this->setName($result->name);
         $this->setEmail($result->email);
-        $this->setTeamLeader($result->team_leader);  
+        $this->setTeamLeader($result->team_leader);
         $this->setTeamId($result->team_id);
 
         $this->message = "Usuário logado com sucesso!";
 
         return true;
-
     }
 
-    public function update () : bool
+    public function update(): bool
     {
         $conn = Connect::getInstance();
 
-        if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)){
+        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
             $this->message = "E-mail inválido!";
             return false;
         }
@@ -188,14 +187,12 @@ class User extends Model {
         $stmt->bindParam(":id", $this->id);
         $stmt->execute();
 
-        if($stmt->rowCount() == 1) {
+        if ($stmt->rowCount() == 1) {
             $this->message = "E-mail já cadastrado!";
             return false;
         }
 
-        $query = "UPDATE users 
-                  SET name = :name, email = :email, team_id = :team_id, team_leader = :team_leader
-                  WHERE id = :id";
+        $query = "UPDATE users SET name = :name, email = :email, team_id = :team_id, team_leader = :team_leader WHERE id = :id";
 
         $stmt = $conn->prepare($query);
         $stmt->bindParam(":name", $this->name);
@@ -212,10 +209,9 @@ class User extends Model {
             $this->message = "Erro ao atualizar: {$exception->getMessage()}";
             return false;
         }
-
     }
 
-    public function updatePassword (string $password, string $newPassword, string $confirmNewPassword) : bool
+    public function updatePassword(string $password, string $newPassword, string $confirmNewPassword): bool
     {
         $query = "SELECT * FROM users WHERE id = :id";
         $conn = Connect::getInstance();
@@ -228,8 +224,8 @@ class User extends Model {
             $this->message = "Senha incorreta!";
             return false;
         }
-        
-        if(7 >= strlen($newPassword)) {
+
+        if (7 >= strlen($newPassword)) {
             $this->message = "Nova senha muito curta minimo de 8 caracteres";
             return false;
         }
@@ -257,10 +253,10 @@ class User extends Model {
             $this->message = "Erro ao atualizar: {$exception->getMessage()}";
             return false;
         }
-
     }
 
-    public function delete(): ?bool {
+    public function delete(): ?bool
+    {
         $conn = Connect::getInstance();
         $query = "delete from users where id = {$this->id}";
         $stmt = $conn->prepare($query);
@@ -273,6 +269,4 @@ class User extends Model {
             return false;
         }
     }
-
-
 }

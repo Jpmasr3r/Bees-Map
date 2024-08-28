@@ -4,12 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <title>BeesMap</title>
-    <link rel="shortcut icon" type="image/png" href="<?= url("themes/_assets/imgs/bee-white.png") ?>"/>
+    <link rel="shortcut icon" type="image/png" href="<?= url("themes/_assets/imgs/bee-white.png") ?>" />
     <link rel="stylesheet" href="<?= url("themes/web/assets/css/style-theme.css") ?>">
     <script src="<?= url("themes/web/assets/js/script-_theme.js") ?>" async></script>
 </head>
 
 <body>
+    <!-- <div class="divNotification">
+        <h1>
+            Error
+        </h1>
+        <h1>
+            Preencha todos os campos
+        </h1>
+    </div> -->
     <nav id="navBar">
         <label id="lblLogo">
             <a href="<?= url("") ?>">

@@ -10,10 +10,10 @@ abstract class Model
 
     protected $entity;
 
-    private $massage;
+    private $message;
     public function getMessage(): ?string
     {
-        return $this->massage;
+        return $this->message;
     }
 
     public function selectAll (): ?array
@@ -33,12 +33,12 @@ abstract class Model
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-public function selectBy(string $key, string $value): ?array
+public function selectBy(string $key, string $value,string $itens = "*",string $type = "="): ?array
 {
     $conn = Connect::getInstance();
-    $query = "SELECT * FROM {$this->entity} WHERE {$key} = :value";
+    $query = "SELECT {$itens} FROM {$this->entity} WHERE {$key} {$type} :value";
     $stmt = $conn->prepare($query);
-    $stmt->bindParam(':value', $value, PDO::PARAM_INT);
+    $stmt->bindParam(':value', $value, PDO::PARAM_STR);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -60,10 +60,10 @@ public function selectBy(string $key, string $value): ?array
 
         try {
             $result = $conn->query($query);
-            $this->massage = "Registro inserido com sucesso!";
+            $this->message = "Registro inserido com sucesso!";
             return $result ? $conn->lastInsertId() : null;
         } catch (PDOException $exception) {
-            $this->massage = "Erro ao inserir: {$exception->getMessage()}";
+            $this->message = "Erro ao inserir: {$exception->getMessage()}";
             return false;
         }
 

@@ -11,7 +11,7 @@ class TokenJWT
     public $token;
     private $secretKey = 'sequencia_secreta_que_ninguem_sabe';
 
-    public function create (array $dataInfo) : string
+    public function create(array $dataInfo): string
     {
         $tokenId    = base64_encode(random_bytes(16));
         $issuedAt   = new DateTimeImmutable();
@@ -34,7 +34,7 @@ class TokenJWT
         );
     }
 
-    public function verify (string $token) : bool
+    public function verify(string $token): bool
     {
         try {
             $this->token = JWT::decode((string)$token, $this->secretKey, ['HS512']);
@@ -48,5 +48,4 @@ class TokenJWT
             return false;
         }
     }
-
 }

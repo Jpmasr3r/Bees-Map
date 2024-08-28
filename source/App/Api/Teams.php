@@ -12,28 +12,18 @@ class Teams extends Api
     public function __construct()
     {
         parent::__construct();
-    }
-
-    public function listTeams()
-    {
-        $team = new Team();
-        $this->back($team->selectAll());
-    }
-
-    public function createTeam(array $data)
-    {
-        $user = new User();
-        $userSession = $user->selectById($_SESSION["user"]["id"]);
-        $token = new TokenJWT();
-        if (!$token->verify($_SESSION["user"]["token"]) || !isset($_SESSION["user"]["token"])) {
+        if (!$this->userAuth) {
             $this->back([
                 "type" => "error",
                 "message" => "Você não pode estar aqui.."
             ]);
             return;
         }
+    }
 
-        if (in_array("", $data)) {
+    public function createTeam(array $data): void
+    {
+        if (in_array("", $data) || in_array(null, $data)) {
             $this->back([
                 "type" => "error",
                 "message" => "Preencha todos os campos"
@@ -46,15 +36,16 @@ class Teams extends Api
             $data["name"],
         );
 
-        $insertTeam = $team->insert();
-
-        if (!$insertTeam) {
+        if (!$team->insert()) {
             $this->back([
                 "type" => "error",
                 "message" => $team->getMessage()
             ]);
             return;
         }
+
+        $user = new User();
+        $userSession = $user->selectById($this->userAuth->id);
 
         $user = new User(
             $userSession["id"],
@@ -72,9 +63,7 @@ class Teams extends Api
             ]);
         }
 
-        $teamSelect = $team->selectById($user->getTeamId());
-
-        $team->setNumberMembers($teamSelect["number_members"] + 1);
+        $team->setNumberMembers(1);
 
         if (!$team->update()) {
             $this->back([
@@ -86,24 +75,15 @@ class Teams extends Api
 
         $this->back([
             "type" => "success",
-            "message" => "Equipe " . $teamSelect["name"] . " cadastrada com sucesso!"
+            "message" => "Equipe " . $data["name"] . " cadastrada com sucesso!"
         ]);
     }
 
-    public function joinTeam(array $data)
+    public function joinTeam(array $data): void
     {
         $user = new User();
-        $userSession = $user->selectById($_SESSION["user"]["id"]);
-        $token = new TokenJWT();
-        if (!$token->verify($_SESSION["user"]["token"]) || !isset($_SESSION["user"]["token"])) {
-            $this->back([
-                "type" => "error",
-                "message" => "Você não pode estar aqui.."
-            ]);
-            return;
-        }
-        
-        if($userSession["team_id"] == null) {
+        $userSession = $user->selectById($this->userAuth->id);
+        if ($userSession["team_id"] != null) {
             $this->back([
                 "type" => "error",
                 "message" => "Você já pertence a um equipe"
@@ -111,7 +91,8 @@ class Teams extends Api
             return;
         }
 
-        if (in_array("", $data)) {
+
+        if (in_array("", $data) || in_array(null, $data)) {
             $this->back([
                 "type" => "error",
                 "message" => "Preencha todos os campos"
@@ -119,16 +100,19 @@ class Teams extends Api
             return;
         }
 
+        $team = new Team();
+        $teamSelect = $team->selectBy("name", $data["name"]);
+
         $user = new User(
-            $userSession["id"],
+            $this->userAuth->id,
             $userSession["name"],
             $userSession["email"],
             null,
-            $data["id"],
+            $teamSelect["id"],
             false
         );
 
-        if(!$user->update()) {
+        if (!$user->update()) {
             $this->back([
                 "type" => "error",
                 "message" => $user->getMessage()
@@ -136,15 +120,13 @@ class Teams extends Api
             return;
         }
 
-        $team = new Team();
-        $teamSelect = $team->selectById($data["id"]);
         $team = new Team(
             $teamSelect["id"],
             $teamSelect["name"],
             $teamSelect["number_members"] + 1,
         );
-        
-        if(!$team->update()) {
+
+        if (!$team->update()) {
             $this->back([
                 "type" => "error",
                 "message" => $team->getMessage()
@@ -153,24 +135,13 @@ class Teams extends Api
         }
 
         $this->back([
-            "type" => "error",
-            "message" => "Parabens " . $userSession["name"] . " você se juntou a equipe " . $teamSelect["name"] . " com sucesso"
+            "type" => "success",
+            "message" => "Parabéns você se juntou a equipe com sucesso"
         ]);
     }
 
-    public function updateTeam(array $data)
+    public function updateTeam(array $data): void
     {
-        $user = new User();
-        $userSession = $user->selectById($_SESSION["user"]["id"]);
-        $token = new TokenJWT();
-        if (!$token->verify($_SESSION["user"]["token"]) || !isset($_SESSION["user"]["token"])) {
-            $this->back([
-                "type" => "error",
-                "message" => "Você não pode estar aqui.."
-            ]);
-            return;
-        }
-
         if (in_array("", $data)) {
             $this->back([
                 "type" => "error",
@@ -178,6 +149,9 @@ class Teams extends Api
             ]);
             return;
         }
+
+        $user = new User();
+        $userSession = $user->selectById($this->userAuth["id"]);
 
         $team = new Team(
             $userSession["team_id"],
@@ -198,23 +172,10 @@ class Teams extends Api
         ]);
     }
 
-    public function deleteTeam()
+    public function deleteTeam(): void
     {
         $user = new User();
-        $userSession = $user->selectById($_SESSION["user"]["id"]);
-        $token = new TokenJWT();
-        if (
-            (!$token->verify($_SESSION["user"]["token"]) ||
-                !isset($_SESSION["user"]["token"])) &&
-            $userSession["team_leader"] == 1
-        ) {
-            $this->back([
-                "type" => "error",
-                "message" => "Você não pode estar aqui.."
-            ]);
-            return;
-        }
-
+        $userSession = $user->selectById($this->userAuth["id"]);
         $usersByTeamId = $user->selectBy("team_id", $userSession["team_id"]);
 
         foreach ($usersByTeamId as $i => $e) {
@@ -254,22 +215,10 @@ class Teams extends Api
         ]);
     }
 
-    public function exitTeam() {
+    public function exitTeam(): void
+    {
         $user = new User();
-        $userSession = $user->selectById($_SESSION["user"]["id"]);
-        $token = new TokenJWT();
-        if (
-            (!$token->verify($_SESSION["user"]["token"]) ||
-                !isset($_SESSION["user"]["token"])) &&
-            $userSession["team_leader"] == 1
-        ) {
-            $this->back([
-                "type" => "error",
-                "message" => "Você não pode estar aqui.."
-            ]);
-            return;
-        }
-
+        $userSession = $user->selectById($this->userAuth->id);
         $user = new User(
             $userSession["id"],
             $userSession["name"],
@@ -279,7 +228,7 @@ class Teams extends Api
             false
         );
 
-        if(!$user->update()) {
+        if (!$user->update()) {
             $this->back([
                 "type" => "error",
                 "message" => $user->getMessage()
@@ -293,9 +242,9 @@ class Teams extends Api
             $teamSelect["id"],
             $teamSelect["name"],
             $teamSelect["number_members"] - 1,
-        ); 
+        );
 
-        if(!$team->update()) {
+        if (!$team->update()) {
             $this->back([
                 "type" => "error",
                 "message" => $team->getMessage()
@@ -306,6 +255,43 @@ class Teams extends Api
         $this->back([
             "type" => "error",
             "message" => "Você saiu da equipe"
+        ]);
+    }
+
+    public function getInfs(): void
+    {
+        $user = new User();
+        $userSession = $user->selectById($this->userAuth->id);
+
+        if ($userSession["team_id"] == null) {
+            $this->back([
+                "type" => "error",
+                "message" => "Você não pertence a nenhuma equipe"
+            ]);
+            return;
+        }
+
+        $team = new Team();
+        $teamSelect = $team->selectById($userSession["team_id"]);
+        $userByTeamId = $user->selectBy("team_id", $teamSelect["id"], "name");
+
+        $this->back([
+            "type" => "success",
+            "data" => [
+                "name" => $teamSelect["name"],
+                "members" => $userByTeamId
+            ],
+        ]);
+    }
+
+    public function getTeams(array $data): void
+    {
+        $team = new Team();
+        $teamsSelect = $team->selectBy("name", "%" . $data["name"] . "%", "name", "like");
+
+        $this->back([
+            "type" => "success",
+            "data" => $teamsSelect
         ]);
     }
 }

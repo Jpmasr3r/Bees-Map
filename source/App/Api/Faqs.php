@@ -2,15 +2,91 @@
 
 namespace Source\App\Api;
 
-use Source\Models\Faq\Question;
+use Source\Models\Faq;
 
 class Faqs extends Api
 {
 
     public function listFaqs(): void
     {
-        $questions = new Question();
-        $this->back($questions->selectAll(), 200);
+        $faq = new Faq();
+        $this->back([
+            "type" => "success",
+            "message" => "Listagem bem sucedida",
+            "data" => $faq->selectAll(),
+        ]);
     }
 
+    public function insert(array $data): void
+    {
+        $faq = new Faq(
+            null,
+            $data["ask"],
+            $data["answer"]
+        );
+
+        if (!$faq->insert()) {
+            $this->back([
+                "type" => "error",
+                "message" => $faq->getMessage()
+            ]);
+            return;
+        }
+
+        $this->back([
+            "type" => "success",
+            "message" => "Pergunta inseriada com sucesso"
+        ]);
+    }
+
+    public function update(array $data): void
+    {
+        $faq = new Faq();
+        $selectFaq = $faq->selectById($data["id"]);
+
+        foreach ($data as $key => $value) {
+            if ($value == "" || $value == null) {
+                $data[$key] = $selectFaq[$key];
+            }
+        }
+
+        $faq = new Faq(
+            $data["id"],
+            $data["ask"],
+            $data["answer"]
+        );
+
+        if (!$faq->update()) {
+            $this->back([
+                "type" => "error",
+                "message" => $faq->getMessage()
+            ]);
+            return;
+        }
+
+        $this->back([
+            "type" => "success",
+            "message" => "Pergunta atualizada com sucesso"
+        ]);
+    }
+
+    public function delete(array $data): void 
+    {
+        $faq = new Faq(
+            $data["id"]
+        );
+
+        if(!$faq->delete()) {
+            $this->back([
+                "type" => "error",
+                "message" => $faq->getMessage()
+            ]);
+            return;
+        }
+
+        $this->back([
+            "type" => "success",
+            "message" => "Sucesso ao deletar a pergunta"
+        ]);
+    }
 }

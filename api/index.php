@@ -12,47 +12,69 @@ $route->namespace("Source\App\Api");
 
 /* USERS */
 $route->group("/users");
-
-// get
 $route->get("/", "Users:listUsers");
-
-//post
+$route->get("/logged","Users:logged");
+$route->get("/getInfs","Users:getInfs");
 $route->post("/","Users:createUser");
 $route->post("/login","Users:loginUser");
-$route->post("/loginOut","Users:loginOut");
-
-//put
 $route->put("/update","Users:updateUser");
-$route->put("/set-password","Users:setPassword");
-
-//delete
+$route->put("/updatePassword","Users:setPassword");
 $route->delete("/delete","Users:deleteUser");
-
 $route->group("null");
 
 /* TEAMS */
 $route->group("/teams");
-
-//get
 $route->get("/","Teams:listTeams");
-
-//post
+$route->get("/getInfs","Teams:getInfs");
+$route->get("/getTeams/{name}","Teams:getTeams");
 $route->post("/","Teams:createTeam");
 $route->post("/join","Teams:joinTeam");
 $route->post("/exit","Teams:exitTeam");
-
-//put
 $route->put("/update","Teams:updateTeam");
-
-//delete
 $route->delete("/delete","Teams:deleteTeam");
-
 $route->group("null");
+
 /* FAQS */
 $route->group("/faqs");
-
-//get
 $route->get("/","Faqs:listFaqs");
+$route->post("/","Faqs:insert");
+$route->put("/update","Faqs:update");
+$route->delete("/delete","Faqs:delete");
+
+/* PRODUTIONS */
+$route->group("/produtions");
+$route->get("/","Produtions:listByTeam");
+$route->post("/","Produtions:insert");
+$route->put("/update","Produtions:update");
+$route->delete("/delete","Produtions:delete");
+
+/* BOXES */
+$route->group("/boxes");
+$route->get("/{area_id}","Boxes:listByArea");
+$route->post("/","Boxes:insert");
+$route->put("/update","Boxes:update");
+$route->delete("/delete","Boxes:delete");
+
+/* AREAS */
+$route->group("/areas");
+$route->get("/","Areas:listByTeam");
+$route->post("/","Areas:insert");
+$route->put("/update","Areas:update");
+$route->delete("/delete","Areas:delete");
+
+/* SALES */
+$route->group("/sales");
+$route->get("/","Sales:listByTeam");
+$route->post("/","Sales:insert");
+$route->put("/update","Sales:update");
+$route->delete("/delete","Sales:delete");
+
+/* VEHICLES */
+$route->group("/vehicles");
+$route->get("/","Vehicles:listByTeam");
+$route->post("/","Vehicles:insert");
+$route->put("/update","Vehicles:update");
+$route->delete("/delete","Vehicles:delete");
 
 $route->group("null");
 

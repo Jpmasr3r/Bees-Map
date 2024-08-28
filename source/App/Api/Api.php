@@ -7,7 +7,7 @@ use Source\Core\TokenJWT;
 class Api
 {
     protected $headers;
-    protected $userAuth = false;
+    protected bool | object $userAuth = false;
 
     public function __construct()
     {

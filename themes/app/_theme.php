@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/png" href="<?= url("themes/_assets/imgs/bee-white.png") ?>"/>
+    <link rel="shortcut icon" type="image/png" href="<?= url("themes/_assets/imgs/bee-white.png") ?>" />
     <link rel="stylesheet" href="<?= url("themes/app/assets/css/styles-theme.css"); ?>">
+    <script type="module" src="<?= url("themes/app/assets/js/script-_theme.js") ?>" async ></script>
     <title>BeesMap</title>
 </head>
 
@@ -38,7 +39,7 @@
         </label>
         <h1>|</h1>
         <label>
-            <a href="<?= url("") ?>">
+            <a href="<?= url("") ?>" id="aLogOut">
                 <h1>Deslogar</h1>
             </a>
         </label>

@@ -4,6 +4,7 @@ namespace Source\App\Api;
 
 use Source\Core\TokenJWT;
 use Source\Models\User;
+use Source\Models\Team;
 
 session_start();
 class Users extends Api
@@ -13,15 +14,9 @@ class Users extends Api
         parent::__construct();
     }
 
-    public function listUsers()
+    public function createUser(array $data): void
     {
-        $users = new User();
-        $this->back($users->selectAll());
-    }
-
-    public function createUser(array $data)
-    {
-        if (in_array("", $data)) {
+        if (in_array("", $data) || in_array(null, $data)) {
             $this->back([
                 "type" => "error",
                 "message" => "Preencha todos os campos"
@@ -37,7 +32,6 @@ class Users extends Api
             return;
         }
 
-
         $user = new User(
             null,
             $data["name"],
@@ -45,9 +39,7 @@ class Users extends Api
             $data["password"]
         );
 
-        $insertUser = $user->insert();
-
-        if (!$insertUser) {
+        if (!$user->insert()) {
             $this->back([
                 "type" => "error",
                 "message" => $user->getMessage()
@@ -61,7 +53,7 @@ class Users extends Api
         ]);
     }
 
-    public function loginUser(array $data)
+    public function loginUser(array $data): void
     {
         $user = new User();
 
@@ -74,31 +66,18 @@ class Users extends Api
         }
 
         $token = new TokenJWT();
-        $tokenCreate = $token->create([
-            "id" => $user->getId(),
-            "name" => $user->getName(),
-            "email" => $user->getEmail()
-        ]);
-        $this->userAuth = $token->verify($tokenCreate);
-
-        $_SESSION["user"] = [
-            "id" => $user->getId(),
-            "token" => $tokenCreate,
-        ];
-
         $this->back([
             "type" => "success",
             "message" => $user->getMessage(),
-            "user" => $_SESSION["user"],
+            "token" => $token->create([
+                "id" => $user->getId(),
+            ])
         ]);
     }
 
-    public function updateUser(array $data)
+    public function updateUser(array $data): void
     {
-        $user = new User();
-        $userSession = $user->selectById($_SESSION["user"]["id"]);
-        $token = new TokenJWT();
-        if (!$token->verify($_SESSION["user"]["token"]) || !isset($_SESSION["user"]["token"])) {
+        if (!$this->userAuth) {
             $this->back([
                 "type" => "error",
                 "message" => "Você não pode estar aqui.."
@@ -106,19 +85,21 @@ class Users extends Api
             return;
         }
 
+        $user = new User();
+        $userSession = $user->selectById($this->userAuth["id"]);
         foreach ($data as $key => $value) {
-            if ($value == null) {
+            if ($value == null || $value == "") {
                 $data[$key] = $userSession[$key];
             }
         }
 
         $user = new User(
-            $userSession["id"],
+            $data["id"],
             $data["name"],
             $data["email"],
             null,
-            $data["team_id"],
-            $data["team_leader"],
+            $userSession["team_id"],
+            $userSession["team_leader"],
         );
 
         if (!$user->update()) {
@@ -130,17 +111,15 @@ class Users extends Api
         }
 
         $this->back([
-            "type" => "success",
-            "message" => "Usuario atualizado com sucesso",
+            "type" => "sucess",
+            "message" => "Usuario atualizado com sucesso"
         ]);
+        return;
     }
 
-    public function setPassword(array $data)
+    public function setPassword(array $data): void
     {
-        $user = new User();
-        $userSession = $user->selectById($_SESSION["user"]["id"]);
-        $token = new TokenJWT();
-        if (!$token->verify($_SESSION["user"]["token"]) || !isset($_SESSION["user"]["token"])) {
+        if (!$this->userAuth) {
             $this->back([
                 "type" => "error",
                 "message" => "Você não pode estar aqui.."
@@ -149,7 +128,7 @@ class Users extends Api
         }
 
         $user = new User(
-            $userSession["id"]
+            $this->userAuth["id"]
         );
 
         if (!$user->updatePassword($data["password"], $data["newPassword"], $data["confirmNewPassword"])) {
@@ -166,20 +145,9 @@ class Users extends Api
         ]);
     }
 
-    public function deleteUser() {
-        if(!isset($_SESSION["user"]["token"])) {
-            $this->back([
-                "type" => "error",
-                "message" => "Você não pode estar aqui.."
-            ]);
-            return;
-        }
-        
-        $user = new User();
-        $userSession = $user->selectById($_SESSION["user"]["id"]);
-        $token = new TokenJWT();
-
-        if (!$token->verify($_SESSION["user"]["token"])) {
+    public function deleteUser(): void
+    {
+        if (!$this->userAuth) {
             $this->back([
                 "type" => "error",
                 "message" => "Você não pode estar aqui.."
@@ -188,10 +156,10 @@ class Users extends Api
         }
 
         $user = new User(
-            $userSession["id"]
+            $this->userAuth["id"]
         );
 
-        if(!$user->delete()) {
+        if (!$user->delete()) {
             $this->back([
                 "type" => "error",
                 "message" => $user->getMessage()
@@ -203,13 +171,22 @@ class Users extends Api
             "type" => "error",
             "message" => "Usuario deletado com sucesso"
         ]);
-
-        session_destroy();
     }
 
-    public function loginOut() {
-        $token = new TokenJWT();
-        if (!$token->verify($_SESSION["user"]["token"]) || !isset($_SESSION["user"]["token"])) {
+    public function logged(): void
+    {
+        $logged = false;
+        if ($this->userAuth) {
+            $logged = true;
+        }
+        $this->back([
+            "logged" => $logged
+        ]);
+    }
+
+    public function getInfs(): void
+    {
+        if (!$this->userAuth) {
             $this->back([
                 "type" => "error",
                 "message" => "Você não pode estar aqui.."
@@ -217,12 +194,31 @@ class Users extends Api
             return;
         }
 
-        session_destroy();
+        $user = new User();
+        $userSession = $user->selectById($this->userAuth->id);
+
+        if ($userSession["team_id"] == null) {
+            $this->back([
+                "type" => "success",
+                "data" => [
+                    "name" => $userSession["name"],
+                    "team_name" => "Não Pertence a nenhuma equipe",
+                    "image" => "",
+                ]
+            ]);
+            return;
+        }
+
+        $team = new Team();
+        $teamSelect = $team->selectById($userSession["team_id"]);
 
         $this->back([
             "type" => "success",
-            "message" => "Você deslogou com sucesso"
+            "data" => [
+                "name" => $userSession["name"],
+                "team_name" => $teamSelect["name"],
+                "image" => "",
+            ]
         ]);
     }
-    
 }

@@ -3,6 +3,7 @@
 ?>
 
 <link rel="stylesheet" href="<?= url("themes/app/assets/css/styles-profile.css") ?>">
+<script type="module" src="<?= url("themes/app/assets/js/script-profile.js") ?>" async></script>
 
 <div id="div-area">
     <div id="div-profile">
