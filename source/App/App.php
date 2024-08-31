@@ -29,4 +29,9 @@ class App
         echo $this->view->render("team",[]);
     }
 
+    public function createTeam ()
+    {
+        echo $this->view->render("createTeam",[]);
+    }
+
 }

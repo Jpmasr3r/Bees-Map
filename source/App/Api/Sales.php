@@ -28,7 +28,6 @@ class Sales extends Api
             "data" => $sale->selectBy(
                 "team_id",
                 $userSession["team_id"],
-                "date, amount, profit, buyer"
             )
         ]);
     }
@@ -67,7 +66,7 @@ class Sales extends Api
 
         $this->back([
             "type" => "success",
-            "message" => "Area inseriada com sucesso"
+            "message" => "Venda inseriada com sucesso"
         ]);
     }
 

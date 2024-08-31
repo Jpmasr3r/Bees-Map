@@ -21,6 +21,16 @@ class Teams extends Api
         }
     }
 
+    public function listTeams() : void {
+        $team = new Team();
+        $allTeams = $team->selectAll();
+        $this->back([
+            "type" => "success",
+            "message" => "listagem de todos as equipes",
+            "data" => $allTeams
+        ]);
+    }
+
     public function createTeam(array $data): void
     {
         if (in_array("", $data) || in_array(null, $data)) {
@@ -103,12 +113,20 @@ class Teams extends Api
         $team = new Team();
         $teamSelect = $team->selectBy("name", $data["name"]);
 
+        if(sizeof($teamSelect) == 0) {
+            $this->back([
+                "type" => "error",
+                "message" => "Equipe não cadatrada"
+            ]);
+            return;
+        }
+
         $user = new User(
             $this->userAuth->id,
             $userSession["name"],
             $userSession["email"],
             null,
-            $teamSelect["id"],
+            $teamSelect[0]["id"],
             false
         );
 
@@ -121,9 +139,9 @@ class Teams extends Api
         }
 
         $team = new Team(
-            $teamSelect["id"],
-            $teamSelect["name"],
-            $teamSelect["number_members"] + 1,
+            $teamSelect[0]["id"],
+            $teamSelect[0]["name"],
+            $teamSelect[0]["number_members"] + 1,
         );
 
         if (!$team->update()) {
@@ -151,7 +169,7 @@ class Teams extends Api
         }
 
         $user = new User();
-        $userSession = $user->selectById($this->userAuth["id"]);
+        $userSession = $user->selectById($this->userAuth->id);
 
         $team = new Team(
             $userSession["team_id"],
@@ -175,7 +193,7 @@ class Teams extends Api
     public function deleteTeam(): void
     {
         $user = new User();
-        $userSession = $user->selectById($this->userAuth["id"]);
+        $userSession = $user->selectById($this->userAuth->id);
         $usersByTeamId = $user->selectBy("team_id", $userSession["team_id"]);
 
         foreach ($usersByTeamId as $i => $e) {
@@ -279,7 +297,8 @@ class Teams extends Api
             "type" => "success",
             "data" => [
                 "name" => $teamSelect["name"],
-                "members" => $userByTeamId
+                "members" => $userByTeamId,
+                "user" => $userSession
             ],
         ]);
     }

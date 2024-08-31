@@ -28,8 +28,7 @@ class Produtions extends Api
             "type" => "success",
             "data" => $prodution->selectBy(
                 "team_id",
-                $userSession["team_id"],
-                "date, amount"
+                $userSession["team_id"]
             )
         ]);
     }
@@ -65,7 +64,7 @@ class Produtions extends Api
 
         $this->back([
             "type" => "success",
-            "message" => "Area inseriada com sucesso"
+            "message" => "Produção inseriada com sucesso"
         ]);
     }
 
@@ -85,7 +84,7 @@ class Produtions extends Api
 
         $this->back([
             "type" => "success",
-            "message" => "Sucesso ao deletar a area"
+            "message" => "Sucesso ao deletar a produção"
         ]);
     }
 }

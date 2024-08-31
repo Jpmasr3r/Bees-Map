@@ -19,6 +19,15 @@ class Faqs extends Api
 
     public function insert(array $data): void
     {
+
+        if(in_array("",$data) || in_array(null,$data)) {
+            $this->back([
+                "type" => "error",
+                "message" => "preencha todos os campos"
+            ]);
+            return;
+        }
+
         $faq = new Faq(
             null,
             $data["ask"],
@@ -41,6 +50,14 @@ class Faqs extends Api
 
     public function update(array $data): void
     {
+        if(in_array("",$data) || in_array(null,$data)) {
+            $this->back([
+                "type" => "error",
+                "message" => "preencha todos os campos"
+            ]);
+            return;
+        }
+        
         $faq = new Faq();
         $selectFaq = $faq->selectById($data["id"]);
 

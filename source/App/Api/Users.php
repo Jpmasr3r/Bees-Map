@@ -14,6 +14,16 @@ class Users extends Api
         parent::__construct();
     }
 
+    public function listUsers() : void {
+        $user = new User();
+        $allUsers = $user->selectAll();
+        $this->back([
+            "type" => "success",
+            "message" => "listagem de todos os usuarios",
+            "data" => $allUsers
+        ]);
+    }
+
     public function createUser(array $data): void
     {
         if (in_array("", $data) || in_array(null, $data)) {
@@ -86,7 +96,7 @@ class Users extends Api
         }
 
         $user = new User();
-        $userSession = $user->selectById($this->userAuth["id"]);
+        $userSession = $user->selectById($this->userAuth->id);
         foreach ($data as $key => $value) {
             if ($value == null || $value == "") {
                 $data[$key] = $userSession[$key];
@@ -94,7 +104,7 @@ class Users extends Api
         }
 
         $user = new User(
-            $data["id"],
+            $this->userAuth->id,
             $data["name"],
             $data["email"],
             null,
@@ -128,7 +138,7 @@ class Users extends Api
         }
 
         $user = new User(
-            $this->userAuth["id"]
+            $this->userAuth->id
         );
 
         if (!$user->updatePassword($data["password"], $data["newPassword"], $data["confirmNewPassword"])) {
@@ -156,7 +166,7 @@ class Users extends Api
         }
 
         $user = new User(
-            $this->userAuth["id"]
+            $this->userAuth->id
         );
 
         if (!$user->delete()) {

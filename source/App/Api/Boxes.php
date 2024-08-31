@@ -26,7 +26,6 @@ class Boxes extends Api
             "data" => $boxe->selectBy(
                 "area_id",
                 $data["area_id"],
-                "identifier, collect_status"
             )
         ]);
     }
@@ -58,7 +57,7 @@ class Boxes extends Api
 
         $this->back([
             "type" => "success",
-            "message" => "Area inseriada com sucesso"
+            "message" => "Caixa inserida com sucesso"
         ]);
     }
 
@@ -90,7 +89,7 @@ class Boxes extends Api
 
         $this->back([
             "type" => "success",
-            "message" => "Area atualizada com sucesso"
+            "message" => "Caixa atualizada com sucesso"
         ]);
     }
 

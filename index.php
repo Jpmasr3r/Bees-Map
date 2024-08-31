@@ -24,6 +24,7 @@ $route->group("/app");
 $route->get("/", "App:home");
 $route->get("/perfil", "App:profile");
 $route->get("/equipe", "App:team");
+$route->get("/equipe/criar", "App:createTeam");
 
 // Rotas amigáveis da área admin
 $route->group(null);

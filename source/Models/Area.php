@@ -127,7 +127,6 @@ class Area extends Model
         $stmt = $conn->prepare($query);
         $stmt->bindParam(":name", $this->name);
         $stmt->bindParam(":team_id", $this->team_id);
-        $stmt->bindParam(":id", $this->id);
         $stmt->execute();
 
         if ($stmt->rowCount() == 1) {
