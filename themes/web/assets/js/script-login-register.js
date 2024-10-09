@@ -3,41 +3,40 @@ import User from "../../../_assets/js/User.js";
 const inpRegisterName = document.querySelector("#inp-register-name");
 const inpRegisterEmail = document.querySelector("#inp-register-email");
 const inpRegisterPassword = document.querySelector("#inp-register-password");
-const inpRegisterConfirmPassword = document.querySelector("#inp-register-confirm-password");
+const inpRegisterConfirmPassword = document.querySelector(
+	"#inp-register-confirm-password",
+);
 
 const btnCreate = document.querySelector("#btn-create");
-btnCreate.addEventListener("click",async () => {
-    const user = new User(
-        inpRegisterEmail.value,
-        inpRegisterPassword.value,
-        inpRegisterConfirmPassword.value,
-        inpRegisterName.value,
-    );
+btnCreate.addEventListener("click", async () => {
+	const user = new User(
+		inpRegisterEmail.value,
+		inpRegisterPassword.value,
+		inpRegisterConfirmPassword.value,
+		inpRegisterName.value,
+	);
 
-    let userInsert = await user.insert();    
-    if(userInsert.type == "success") {
-        setTimeout(() => {
-            location.href = "http://localhost/beesmap/login";
-        },1500);
-    }
-})
+	const userInsert = await user.insert();
+	if (userInsert.type === "success") {
+		setTimeout(() => {
+			location.href = "http://localhost/beesmap/login";
+		}, 1500);
+	}
+});
 
 const inpLoginEmail = document.querySelector("#inp-login-email");
 const inpLoginPassword = document.querySelector("#inp-login-password");
 
 const btnLogin = document.querySelector("#btn-login");
-btnLogin.addEventListener("click",async () => {
-    const user = new User(
-        inpLoginEmail.value,
-        inpLoginPassword.value,
-    );
-    
-    let userLogin = await user.login();
-    if(userLogin.type == "success") {
-        localStorage.setItem("token", userLogin.token);
+btnLogin.addEventListener("click", async () => {
+	const user = new User(inpLoginEmail.value, inpLoginPassword.value);
 
-        setTimeout(() => {
-            location.href = "http://localhost/beesmap/app";
-        },1500);
-    }
-})
+	const userLogin = await user.login();
+	if (userLogin.type === "success") {
+		localStorage.setItem("token", userLogin.token);
+
+		setTimeout(() => {
+			location.href = "http://localhost/beesmap/app";
+		}, 1500);
+	}
+});

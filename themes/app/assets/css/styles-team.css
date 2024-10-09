@@ -1,208 +1,261 @@
 #div-area {
-    width: 100%;
-    height: auto; /* Altura ajustada ao conteúdo */
-    display: flex;
-    justify-content: center; /* Centraliza o time na tela */
-    align-items: center;
-    flex-direction: column;
-    padding: 40px; /* Espaçamento ao redor */
+	width: 100%;
+	height: auto; /* Altura ajustada ao conteúdo */
+	display: flex;
+	justify-content: center; /* Centraliza o time na tela */
+	align-items: center;
+	flex-direction: column;
+	padding: 40px; /* Espaçamento ao redor */
 }
 
 .team-focus {
-    width: 100%;
-    max-width: 900px; /* Largura máxima do time */
-    background-color: #1a141a; /* Fundo do time */
-    margin: 30px auto; /* Espaço acima e abaixo */
-    border-radius: 15px; /* Bordas arredondadas */
-    padding: 30px; /* Espaçamento interno */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra para foco */
+	width: 100%;
+	max-width: 900px; /* Largura máxima do time */
+	background-color: #1a141a; /* Fundo do time */
+	margin: 30px auto; /* Espaço acima e abaixo */
+	border-radius: 15px; /* Bordas arredondadas */
+	padding: 30px; /* Espaçamento interno */
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra para foco */
 }
 
 .div-team-info {
-    text-align: center; /* Centraliza o texto */
-    margin-bottom: 20px; /* Espaço entre título e membros */
-    padding-bottom: 10px; /* Espaçamento abaixo da linha */
-    border-bottom: 3px solid #e59312; /* Linha de separação */
+	text-align: center; /* Centraliza o texto */
+	margin-bottom: 20px; /* Espaço entre título e membros */
+	padding-bottom: 10px; /* Espaçamento abaixo da linha */
+	border-bottom: 3px solid #e59312; /* Linha de separação */
 }
 
 .div-team-info h1 {
-    margin: 0;
-    font-size: 28px; /* Tamanho do título */
-    color: #e59312; /* Cor do título */
-    letter-spacing: 1px; /* Espaçamento entre letras */
-    text-transform: uppercase; /* Texto em maiúsculas */
+	margin: 0;
+	font-size: 28px; /* Tamanho do título */
+	color: #e59312; /* Cor do título */
+	letter-spacing: 1px; /* Espaçamento entre letras */
+	text-transform: uppercase; /* Texto em maiúsculas */
 }
 
 .div-team-info p {
-    margin: 10px 0;
-    color: #f4b315; /* Cor da descrição */
-    font-size: 20px; /* Tamanho da descrição */
-    line-height: 1.5; /* Espaçamento entre linhas */
+	margin: 10px 0;
+	color: #f4b315; /* Cor da descrição */
+	font-size: 20px; /* Tamanho da descrição */
+	line-height: 1.5; /* Espaçamento entre linhas */
 }
 
 .div-team-members {
-    display: flex;
-    flex-wrap: wrap; /* Quebra de linha se necessário */
-    justify-content: space-around; /* Espaçamento uniforme */
-    gap: 15px; /* Espaço entre membros */
+	display: flex;
+	flex-wrap: wrap; /* Quebra de linha se necessário */
+	justify-content: space-around; /* Espaçamento uniforme */
+	gap: 15px; /* Espaço entre membros */
 }
 
 .div-team-members h1 {
-    width: 100%;
-    font-size: 24px;
-    color: #e59312; /* Cor do título dos membros */
-    text-align: center; /* Centraliza o título */
-    margin-bottom: 20px; /* Espaço abaixo do título */
+	width: 100%;
+	font-size: 24px;
+	color: #e59312; /* Cor do título dos membros */
+	text-align: center; /* Centraliza o título */
+	margin-bottom: 20px; /* Espaço abaixo do título */
 }
 
 .team-member {
-    width: calc(48% - 10px); /* Quase metade da largura disponível */
-    background-color: #8e5915; /* Cor de fundo do membro */
-    padding: 15px; /* Espaçamento interno */
-    border-radius: 10px; /* Bordas arredondadas */
-    display: flex;
-    align-items: center; /* Centraliza verticalmente */
-    justify-content: flex-start; /* Alinha ao início */
-    gap: 10px; /* Espaço entre imagem e texto */
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Sombra para destaque */
+	width: calc(48% - 10px); /* Quase metade da largura disponível */
+	background-color: #8e5915; /* Cor de fundo do membro */
+	padding: 15px; /* Espaçamento interno */
+	border-radius: 10px; /* Bordas arredondadas */
+	display: flex;
+	align-items: center; /* Centraliza verticalmente */
+	justify-content: flex-start; /* Alinha ao início */
+	gap: 10px; /* Espaço entre imagem e texto */
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Sombra para destaque */
 }
 
 .team-member-info h1 {
-    color: #1a141a; /* Cor do nome do membro */
-    font-size: 18px; /* Tamanho da fonte do membro */
-    margin: 0;
-    text-align: center; /* Centraliza o nome do membro */
+	color: #1a141a; /* Cor do nome do membro */
+	font-size: 18px; /* Tamanho da fonte do membro */
+	margin: 0;
+	text-align: center; /* Centraliza o nome do membro */
 }
 
 .team-member img {
-    width: 50px; /* Largura da imagem */
-    height: 50px; /* Altura da imagem */
-    border-radius: 50%; /* Formato circular */
-    border: 2px solid #1a141a; /* Borda */
-    object-fit: cover; /* Ajuste de imagem */
+	width: 50px; /* Largura da imagem */
+	height: 50px; /* Altura da imagem */
+	border-radius: 50%; /* Formato circular */
+	border: 2px solid #1a141a; /* Borda */
+	object-fit: cover; /* Ajuste de imagem */
 }
 
 /* Estilo para a área de pesquisa */
 #div-area {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px;
-    background-color: #1a141a; /* Cor de fundo clara */
-    border-radius: 15px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra */
-    color: #f4b315;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 40px;
+	background-color: #1a141a; /* Cor de fundo clara */
+	border-radius: 15px;
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra */
+	color: #f4b315;
 }
 
 #div-area div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 }
 
 /* Título de aviso */
 #div-area h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    text-align: center;
+	font-size: 24px;
+	margin-bottom: 20px;
+	text-align: center;
 }
 
 /* Estilo do formulário de busca */
 #div-area label {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    max-width: 400px;
-    margin-bottom: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	max-width: 400px;
+	margin-bottom: 20px;
 }
 
 #div-area label p {
-    font-size: 18px;
-    margin-bottom: 5px;
+	font-size: 18px;
+	margin-bottom: 5px;
 }
 
-#div-area input{
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 10px;
-    outline: none;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra interna */
-    border: 3px solid #1a141a; /* Cor da borda */   
-    background-color: #f4b315;
-    color: #1a141a;
+#div-area input {
+	width: 100%;
+	padding: 10px;
+	font-size: 16px;
+	border-radius: 10px;
+	outline: none;
+	box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra interna */
+	border: 3px solid #1a141a; /* Cor da borda */
+	background-color: #f4b315;
+	color: #1a141a;
 }
 
 #div-area input:focus {
-    border: 3px solid #f4b315; /* Cor da borda */   
-    background-color: #1a141a;
-    color: #f4b315;
+	border: 3px solid #f4b315; /* Cor da borda */
+	background-color: #1a141a;
+	color: #f4b315;
 }
 
 #div-area button {
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    background-color: #f4b315; /* Cor ao passar o mouse */
-    border-color: #1a141a;
-    color: #1a141a;
+	padding: 10px 20px;
+	font-size: 16px;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+	background-color: #f4b315; /* Cor ao passar o mouse */
+	border-color: #1a141a;
+	color: #1a141a;
 }
 
 #div-area button:hover {
-    background-color: #1a141a;
-    border: 3px solid #f4b315;
-    color: #f4b315;
+	background-color: #1a141a;
+	border: 3px solid #f4b315;
+	color: #f4b315;
 }
 
 /* Estilo para os resultados de pesquisa */
 #div-search {
-    width: 100%;
-    max-width: 900px;
-    margin-top: 20px;
+	width: 100%;
+	max-width: 900px;
+	margin-top: 20px;
 }
 
 /* Estilo para cada equipe encontrada */
 #div-search > div {
-    width: 100%;
-    background-color: #e59312   ;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    align-items: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+	width: 100%;
+	background-color: #e59312;
+	padding: 20px;
+	border-radius: 10px;
+	margin-bottom: 15px;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+	align-items: center;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
 }
 
 #div-search h1 {
-    font-size: 22px;
-    margin: 0;
-    letter-spacing: 1px;
-    color: #1a141a;
+	font-size: 22px;
+	margin: 0;
+	letter-spacing: 1px;
+	color: #1a141a;
 }
 
 #div-search button {
-    padding: 10px 15px;
-    font-size: 16px;
-    background-color: #f4b315;
-    color: #1a141a;
-    border: 3px solid #1a141a;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+	padding: 10px 15px;
+	font-size: 16px;
+	background-color: #f4b315;
+	color: #1a141a;
+	border: 3px solid #1a141a;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: background-color 0.3s;
 }
 
 #div-search button:hover {
-    background-color: #1a141a; /* Cor ao passar o mouse */
-    color: #f4b315;
-    border-color: #f4b315;
+	background-color: #1a141a; /* Cor ao passar o mouse */
+	color: #f4b315;
+	border-color: #f4b315;
 }
 
+/* Estilo para o container de áreas */
+#div-areas {
+	width: 100%; /* Largura total */
+	max-width: 900px; /* Largura máxima */
+	background-color: #1a141a; /* Cor de fundo escura para combinar com o tema */
+	padding: 20px; /* Espaçamento interno */
+	border-radius: 15px; /* Bordas arredondadas */
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra para destaque */
+	margin-top: 20px; /* Espaço acima da div de áreas */
+	color: #f4b315; /* Cor do texto */
+}
+
+/* Estilo para o título das áreas */
+#div-areas h1 {
+	font-size: 24px; /* Tamanho da fonte do título */
+	color: #e59312; /* Cor do título */
+	margin-bottom: 15px; /* Espaçamento abaixo do título */
+	text-align: center; /* Centraliza o título */
+}
+
+/* Estilo para cada área */
+.area {
+	background-color: #3e2a1b; /* Cor de fundo mais escura */
+	border: 1px solid #7e5a3e; /* Borda com uma cor terrosa */
+	border-radius: 10px; /* Bordas arredondadas */
+	padding: 15px; /* Espaçamento interno */
+	margin-bottom: 15px; /* Espaçamento abaixo de cada área */
+	transition: transform 0.2s; /* Transição suave para transformação */
+	color: #f4b315; /* Cor do texto */
+}
+
+/* Efeito hover nas áreas */
+.area:hover {
+	transform: scale(1.02); /* Aumenta ligeiramente ao passar o mouse */
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra mais intensa */
+}
+
+/* Estilo para a div interna de boxes (se houver) */
+.div-boxes {
+	background-color: #5e4d4a; /* Cor de fundo para as boxes, mais escura */
+	border: 1px dashed #d1b88a; /* Borda tracejada com cor terrosa */
+	border-radius: 5px; /* Bordas arredondadas */
+	padding: 10px; /* Espaçamento interno */
+	min-height: 50px; /* Altura mínima */
+	color: #f4b315; /* Cor do texto dentro da box */
+}
+
+/* Título da box */
+.div-boxes h2 {
+	margin: 0; /* Remove margem do título */
+	font-size: 18px; /* Tamanho do título */
+	color: #f4b315; /* Cor do texto do título */
+}

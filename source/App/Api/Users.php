@@ -212,7 +212,7 @@ class Users extends Api
                 "type" => "success",
                 "data" => [
                     "name" => $userSession["name"],
-                    "team_name" => "Não Pertence a nenhuma equipe",
+                    "team_name" => false,
                     "image" => "",
                 ]
             ]);

@@ -29,7 +29,7 @@ class Areas extends Api
             "data" => $area->selectBy(
                 "team_id",
                 $userSession["team_id"],
-                "name, description, weathered, latitude, longitude"
+                "name, description, locate, weathered"
             )
         ]);
     }
@@ -53,8 +53,7 @@ class Areas extends Api
             $data["name"],
             $data["description"],
             false,
-            $data["latitude"],
-            $data["longitude"]
+            $data["locate"],
         );
 
         if (!$area->insert()) {
@@ -106,13 +105,13 @@ class Areas extends Api
         ]);
     }
 
-    public function delete(array $data): void 
+    public function delete(array $data): void
     {
         $area = new Area(
             $data["id"]
         );
 
-        if(!$area->delete()) {
+        if (!$area->delete()) {
             $this->back([
                 "type" => "error",
                 "message" => $area->getMessage()

@@ -13,8 +13,7 @@ class Area extends Model
     private $name;
     private $description;
     private $weathered;
-    private $latitude;
-    private $longitude;
+    private $locate; // Nova propriedade
     private $message;
 
     public function __construct(
@@ -23,16 +22,14 @@ class Area extends Model
         string $name = null,
         string $description = null,
         bool $weathered = false,
-        float $latitude = null,
-        float $longitude = null,
+        string $locate = null, // Nova propriedade
     ) {
         $this->id = $id;
         $this->team_id = $team_id;
         $this->name = $name;
         $this->description = $description;
         $this->weathered = $weathered;
-        $this->latitude = $latitude;
-        $this->longitude = $longitude;
+        $this->locate = $locate; // Atribuição da nova propriedade
         $this->entity = "areas";
     }
 
@@ -62,14 +59,9 @@ class Area extends Model
         return $this->weathered;
     }
 
-    public function getLatitude(): ?float
+    public function getLocate(): ?string // Novo getter
     {
-        return $this->latitude;
-    }
-
-    public function getLongitude(): ?float
-    {
-        return $this->longitude;
+        return $this->locate;
     }
 
     public function getMessage(): ?string
@@ -103,21 +95,15 @@ class Area extends Model
         $this->weathered = $weathered;
     }
 
-    public function setLatitude(?float $latitude): void
+    public function setLocate(?string $locate): void // Novo setter
     {
-        $this->latitude = $latitude;
-    }
-
-    public function setLongitude(?float $longitude): void
-    {
-        $this->longitude = $longitude;
+        $this->locate = $locate;
     }
 
     public function setMessage(?string $message): void
     {
         $this->message = $message;
     }
-
 
     public function insert(): ?int
     {
@@ -130,18 +116,17 @@ class Area extends Model
         $stmt->execute();
 
         if ($stmt->rowCount() == 1) {
-            $this->message = "Area já cadastrada!";
+            $this->message = "Área já cadastrada!";
             return false;
         }
 
-        $query = "INSERT INTO areas (name, description, weathered, latitude, longitude, team_id) 
-        VALUES (:name, :description, null, :latitude, :longitude, :team_id)";
+        $query = "INSERT INTO areas (name, description, weathered, locate, team_id) 
+        VALUES (:name, :description, null, :locate, :team_id)";
 
         $stmt = $conn->prepare($query);
         $stmt->bindParam(":name", $this->name);
         $stmt->bindParam(":description", $this->description);
-        $stmt->bindParam(":latitude", $this->latitude);
-        $stmt->bindParam(":longitude", $this->longitude);
+        $stmt->bindParam(":locate", $this->locate); // Bind da nova propriedade
         $stmt->bindParam(":team_id", $this->team_id);
 
         try {
@@ -153,6 +138,7 @@ class Area extends Model
             return false;
         }
     }
+
     public function update(): bool
     {
         $conn = Connect::getInstance();
@@ -165,7 +151,7 @@ class Area extends Model
         $stmt->execute();
 
         if ($stmt->rowCount() == 1) {
-            $this->message = "Area já cadastrada!";
+            $this->message = "Área já cadastrada!";
             return false;
         }
 
@@ -173,8 +159,7 @@ class Area extends Model
         name = :name, 
         description = :description, 
         weathered = :weathered, 
-        latitude = :latitude, 
-        longitude = :longitude, 
+        locate = :locate,  // Atualização da nova propriedade
         team_id = :team_id 
         WHERE id = :id";
 
@@ -182,14 +167,13 @@ class Area extends Model
         $stmt->bindParam(":name", $this->name);
         $stmt->bindParam(":description", $this->description);
         $stmt->bindParam(":weathered", $this->weathered);
-        $stmt->bindParam(":latitude", $this->latitude);
-        $stmt->bindParam(":longitude", $this->longitude);
+        $stmt->bindParam(":locate", $this->locate); // Bind da nova propriedade
         $stmt->bindParam(":team_id", $this->team_id);
         $stmt->bindParam(":id", $this->id);
 
         try {
             $stmt->execute();
-            $this->message = "Area atualizada com sucesso!";
+            $this->message = "Área atualizada com sucesso!";
             return true;
         } catch (PDOException $exception) {
             $this->message = "Erro ao atualizar: {$exception->getMessage()}";
@@ -200,11 +184,11 @@ class Area extends Model
     public function delete(): ?bool
     {
         $conn = Connect::getInstance();
-        $query = "delete from areas where id = {$this->id}";
+        $query = "DELETE FROM areas WHERE id = {$this->id}";
         $stmt = $conn->prepare($query);
         try {
             $stmt->execute();
-            $this->message = "Area deletada com sucesso";
+            $this->message = "Área deletada com sucesso!";
             return true;
         } catch (PDOException $exception) {
             $this->message = "Erro ao deletar: {$exception->getMessage()}";

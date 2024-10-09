@@ -13,8 +13,7 @@ CREATE TABLE areas (
     name VARCHAR(255),
     description VARCHAR(255),
     weathered boolean,
-    latitude double,
-    longitude double,
+    locate VARCHAR(255),
     team_id INT,
     FOREIGN KEY (team_id) REFERENCES teams (id)
 );
@@ -72,3 +71,6 @@ create table faqs(
     ask varchar(255),  
     answer varchar(255)
 );
+
+
+SELECT * from areas;

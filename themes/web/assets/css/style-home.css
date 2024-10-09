@@ -13,6 +13,8 @@
     
 }
 
+#map { height: 180px; }
+
 @keyframes flyBeesAnimation {
     0% {
         left: 0%;

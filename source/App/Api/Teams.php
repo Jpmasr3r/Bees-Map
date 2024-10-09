@@ -21,7 +21,8 @@ class Teams extends Api
         }
     }
 
-    public function listTeams() : void {
+    public function listTeams(): void
+    {
         $team = new Team();
         $allTeams = $team->selectAll();
         $this->back([
@@ -113,7 +114,7 @@ class Teams extends Api
         $team = new Team();
         $teamSelect = $team->selectBy("name", $data["name"]);
 
-        if(sizeof($teamSelect) == 0) {
+        if (sizeof($teamSelect) == 0) {
             $this->back([
                 "type" => "error",
                 "message" => "Equipe não cadatrada"
@@ -271,12 +272,12 @@ class Teams extends Api
         }
 
         $this->back([
-            "type" => "error",
+            "type" => "success",
             "message" => "Você saiu da equipe"
         ]);
     }
 
-    public function getInfs(): void
+    public function infs(): void
     {
         $user = new User();
         $userSession = $user->selectById($this->userAuth->id);
@@ -293,12 +294,12 @@ class Teams extends Api
         $teamSelect = $team->selectById($userSession["team_id"]);
         $userByTeamId = $user->selectBy("team_id", $teamSelect["id"], "name");
 
+
         $this->back([
             "type" => "success",
             "data" => [
                 "name" => $teamSelect["name"],
                 "members" => $userByTeamId,
-                "user" => $userSession
             ],
         ]);
     }

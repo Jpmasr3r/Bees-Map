@@ -3,7 +3,7 @@ echo $this->layout("_theme");
 ?>
 
 <link rel="stylesheet" href="<?= url("themes/app/assets/css/styles-team.css") ?>">
-<script type="module" src="<?= url("themes/app/assets/js/script-team.js") ?>" async></script>
+<script src="<?= url("themes/app/assets/js/script-team.js") ?>" async type="module"></script>
 
 <div id="div-area">
     <div class="team-focus">
@@ -14,5 +14,14 @@ echo $this->layout("_theme");
             <h1>Membros da Equipe</h1>
         </div>
         <button id="btn-exit-team">Sair da equipe</button>
+        <button id="btn-delete-team">Deletar Equipe</button>
+        <button id="btn-insert-area">Inserir Area</button>
+        <div id="div-areas">
+            <h1>Areas</h1>
+            <!-- <div class="area">
+                <h1>Nome da area</h1>
+                <div class="div-boxes"></div>
+            </div> -->
+        </div>
     </div>
 </div>
