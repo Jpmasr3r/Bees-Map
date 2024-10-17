@@ -18,10 +18,20 @@ echo $this->layout("_theme");
         <button id="btn-insert-area">Inserir Area</button>
         <div id="div-areas">
             <h1>Areas</h1>
-            <!-- <div class="area">
+            <div class="area">
                 <h1>Nome da area</h1>
-                <div class="div-boxes"></div>
-            </div> -->
+                <div class="div-boxes">
+                    <div class="box">
+                        <h1>Indentificador 1</h1>
+                        <h1>Collectado</h1>
+                    </div>
+
+                    <div class="box">
+                        <h1>Indentificador 2</h1>
+                        <h1>Não Collectado</h1>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

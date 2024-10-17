@@ -29,7 +29,7 @@ class Areas extends Api
             "data" => $area->selectBy(
                 "team_id",
                 $userSession["team_id"],
-                "name, description, locate, weathered"
+                "name, description, locate, weathered, id"
             )
         ]);
     }
@@ -87,8 +87,7 @@ class Areas extends Api
             $data["name"],
             $data["description"],
             $data["weathered"],
-            $areaSelect["latitude"],
-            $areaSelect["longitude"],
+            $data["locate"]
         );
 
         if (!$area->update()) {

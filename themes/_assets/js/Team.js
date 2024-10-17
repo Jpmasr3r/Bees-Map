@@ -77,7 +77,7 @@ class Team {
 	async update() {
 		try {
 			const data = await fetch("http://localhost/beesmap/api/teams/update", {
-				method: "PUT",
+				method: "POST",
 				body: this.getFormData(),
 				headers: {
 					token: localStorage.getItem("token"),

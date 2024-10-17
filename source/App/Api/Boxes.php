@@ -3,6 +3,7 @@
 namespace Source\App\Api;
 
 use Source\Models\Boxe;
+use Source\Models\User;
 
 class Boxes extends Api
 {
@@ -75,7 +76,7 @@ class Boxes extends Api
         $boxe = new Boxe(
             $boxeSelect["id"],
             $boxeSelect["area_id"],
-            $data["indentifier"],
+            $data["identifier"],
             $data["collect_status"]
         );
 
@@ -93,13 +94,13 @@ class Boxes extends Api
         ]);
     }
 
-    public function delete(array $data): void 
+    public function delete(array $data): void
     {
         $boxe = new Boxe(
             $data["id"]
         );
 
-        if(!$boxe->delete()) {
+        if (!$boxe->delete()) {
             $this->back([
                 "type" => "error",
                 "message" => $boxe->getMessage()

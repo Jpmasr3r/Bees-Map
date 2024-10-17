@@ -12,16 +12,16 @@ $route->namespace("Source\App");
 
 // Rotas amigáveis da área pública
 $route->get("/", "Web:home");
-$route->get("/login","Web:loginRegister");
-$route->get("/register","Web:loginRegister");
+$route->get("/login", "Web:loginRegister");
+$route->get("/register", "Web:loginRegister");
 $route->get("/sobre", "Web:about");
 $route->get("/contato", "Web:contact");
-$route->get("/faqs","Web:faqs");
+$route->get("/faqs", "Web:faqs");
 
 // Rotas amigáveis da área app
 $route->group("/app");
 
-$route->get("/", "App:home");
+$route->get("/", "App:team");
 $route->get("/perfil", "App:profile");
 $route->get("/equipe", "App:team");
 $route->get("/equipe/criar", "App:createTeam");

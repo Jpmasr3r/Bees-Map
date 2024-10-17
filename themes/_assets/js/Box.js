@@ -1,33 +1,31 @@
-class Area {
+class Box {
 	constructor(
 		options = {
-			id: undefined,
-			name: undefined,
-			description: undefined,
-			locate: undefined,
-			weathered: undefined,
+			id: "",
+			area_id: "",
+			identifier: "",
+			collect_status: "",
 		},
 	) {
 		this.id = options.id;
-		this.name = options.name;
-		this.description = options.description;
-		this.locate = options.locate;
-		this.weathered = options.false;
+		this.area_id = options.area_id;
+		this.identifier = options.identifier;
+		this.collect_status = options.collect_status;
 	}
 
+	// Method to get data as FormData
 	getFormData() {
 		const formData = new FormData();
+		formData.append("identifier", this.identifier);
+		formData.append("collect_status", this.collect_status);
+		formData.append("area_id", this.area_id);
 		formData.append("id", this.id);
-		formData.append("name", this.name);
-		formData.append("description", this.description);
-		formData.append("locate", this.locate);
-		formData.append("weathered", this.weathered);
 		return formData;
 	}
 
 	async insert() {
 		try {
-			const data = await fetch("http://localhost/beesmap/api/areas", {
+			const data = await fetch("http://localhost/beesmap/api/boxes", {
 				method: "POST",
 				body: this.getFormData(),
 				headers: {
@@ -46,12 +44,15 @@ class Area {
 
 	async list() {
 		try {
-			const data = await fetch("http://localhost/beesmap/api/areas", {
-				method: "GET",
-				headers: {
-					token: localStorage.getItem("token"),
+			const data = await fetch(
+				`http://localhost/beesmap/api/boxes/${this.area_id}`,
+				{
+					method: "GET",
+					headers: {
+						token: localStorage.getItem("token"),
+					},
 				},
-			}).then((res) => res.json());
+			).then((res) => res.json());
 
 			return data;
 		} catch (error) {
@@ -64,7 +65,7 @@ class Area {
 
 	async delete() {
 		try {
-			const data = await fetch("http://localhost/beesmap/api/areas/delete", {
+			const data = await fetch(`http://localhost/beesmap/api/boxes/delete`, {
 				method: "POST",
 				body: this.getFormData(),
 				headers: {
@@ -83,7 +84,7 @@ class Area {
 
 	async update() {
 		try {
-			const data = await fetch("http://localhost/beesmap/api/areas/update", {
+			const data = await fetch(`http://localhost/beesmap/api/boxes/update`, {
 				method: "POST",
 				body: this.getFormData(),
 				headers: {
@@ -101,4 +102,4 @@ class Area {
 	}
 }
 
-export default Area;
+export default Box;

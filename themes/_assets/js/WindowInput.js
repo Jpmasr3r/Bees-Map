@@ -52,6 +52,7 @@ class WindowInput {
 
 			div.appendChild(button);
 			document.body.appendChild(div);
+			div.scrollIntoView({ behavior: "smooth" });
 
 			button.addEventListener("click", () => {
 				if (document.body.contains(div)) {

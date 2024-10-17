@@ -32,9 +32,6 @@ echo $this->layout("_theme");
 // } 
 ?>
 
-<div id="map">
-</div>
-
 <div id="text">
     <i>
         <b>

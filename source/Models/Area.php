@@ -159,7 +159,7 @@ class Area extends Model
         name = :name, 
         description = :description, 
         weathered = :weathered, 
-        locate = :locate,  // Atualização da nova propriedade
+        locate = :locate,
         team_id = :team_id 
         WHERE id = :id";
 
@@ -167,7 +167,7 @@ class Area extends Model
         $stmt->bindParam(":name", $this->name);
         $stmt->bindParam(":description", $this->description);
         $stmt->bindParam(":weathered", $this->weathered);
-        $stmt->bindParam(":locate", $this->locate); // Bind da nova propriedade
+        $stmt->bindParam(":locate", $this->locate);
         $stmt->bindParam(":team_id", $this->team_id);
         $stmt->bindParam(":id", $this->id);
 
@@ -183,11 +183,17 @@ class Area extends Model
 
     public function delete(): ?bool
     {
-        $conn = Connect::getInstance();
-        $query = "DELETE FROM areas WHERE id = {$this->id}";
-        $stmt = $conn->prepare($query);
         try {
+            $conn = Connect::getInstance();
+
+            $query = "DELETE FROM boxes WHERE area_id = {$this->id}";
+            $stmt = $conn->prepare($query);
             $stmt->execute();
+
+            $query = "DELETE FROM areas WHERE id = {$this->id}";
+            $stmt = $conn->prepare($query);
+            $stmt->execute();
+
             $this->message = "Área deletada com sucesso!";
             return true;
         } catch (PDOException $exception) {
